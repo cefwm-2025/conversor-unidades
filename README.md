@@ -4,7 +4,7 @@ Criar uma aplicação web que permita converter unidades de **peso, comprimento 
 
 ## Integrantes
 - Gustavo Mendes — gmendes.2025@alunos.utfpr.edu.br
-- Carol Kita — email
+- Carol Kita — carolkita95@gmail.com
 
 ## Tecnologias
 - HTML5  
