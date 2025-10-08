@@ -245,3 +245,16 @@ textarea {
   }
 }
 
+
+body {
+  background: linear-gradient(135deg, #f0f4ff, #e8f0fe);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.converter-card {
+  max-width: 600px !important;
+  margin: auto;
+  border-radius: 1rem !important;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+}

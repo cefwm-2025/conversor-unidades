@@ -18,8 +18,65 @@
     <link rel="manifest" href="site.webmanifest">
     <meta name="theme-color" content="#fafafa">
   </head>
-  <body>
-    <h1>Conversor de Unidades</h1>
-    <p>Projeto: conversão de peso, comprimento e temperatura!</p>
-  </body>
+
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container">
+      <span class="navbar-brand mb-0 h1 fw-bold">Conversor de Unidades</span>
+    </div>
+  </nav>
+
+  <div class="container my-5">
+    <div class="row">
+      <div class="card converter-card p-4 col-md-6">
+        <h5 class="card-title text-center mb-4">Selecione o tipo de conversão</h5>
+
+        <div class="mb-3">
+          <label for="tipoConversao" class="form-label fw-semibold">Tipo:</label>
+          <select id="tipoConversao" class="form-select">
+            <!-- <option value="" selected disabled>Escolha...</option> -->
+            <option value="peso" selected>Peso</option>
+            <option value="comprimento">Comprimento</option>
+            <option value="temperatura">Temperatura</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <!-- Unidade Origem -->
+          <div class="mb-3 col-md-6">
+            <label for="deUnidade" class="form-label fw-semibold">De:</label>
+            <select id="deUnidade" class="form-select"></select>
+          </div>
+
+          <!-- Unidade Destino -->
+          <div class="mb-3 col-md-6">
+            <label for="paraUnidade" class="form-label fw-semibold">Para:</label>
+            <select id="paraUnidade" class="form-select"></select>
+          </div>
+        </div>
+
+        <div class="row mb-2">
+          <!-- Valor -->
+          <div class="mb-3 col-md-6">
+            <input type="number" id="valor" class="form-control" placeholder="Digite o valor">
+          </div>
+          <!-- Resultado -->
+          <div class="mb-3 col-md-6">
+            <input type="number" id="resultado" class="form-control text-bold" placeholder="Resultado" disabled>
+          </div>
+        </div>
+        <!-- Botão -->
+        <div class="d-grid mb-3">
+          <button id="btnConverter" class="btn btn-primary" disabled>Converter</button>
+        </div>
+
+
+        <!-- <div id="resultado" class="alert alert-info text-center d-none"></div> -->
+      </div>
+
+    </div>
+  </div>
+
+</body>
 </html>
