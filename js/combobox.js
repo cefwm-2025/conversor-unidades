@@ -28,6 +28,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const tipoEl = document.getElementById("tipoConversao");
   const deEl = document.getElementById("deUnidade");
   const paraEl = document.getElementById("paraUnidade");
+  const valorEl = document.getElementById("valor");
+  const btnConverter = document.getElementById("btnConverter");
+  const resultadoEl = document.getElementById("resultado");
 
   const optionHTML = (v) => `<option value="${v}">${LABELS[v] || v}</option>`;
 
@@ -46,4 +49,68 @@ document.addEventListener("DOMContentLoaded", () => {
   tipoEl.addEventListener("change", preencherSelects);
 
   preencherSelects();
+
+
+  // Função de conversão das unidades
+  function converter(tipo, valor, de, para) {
+
+    let base; // valor convertido para unidade base antes de converter para a desejada
+
+    switch (tipo) {
+      case "peso":
+        // converte tudo para gramas como base
+        const fatorPeso = {
+          g: 1,
+          kg: 1000,
+          lb: 453.59237,
+          oz: 28.3495231,
+        };
+        base = valor * fatorPeso[de];
+        return base / fatorPeso[para];
+
+      case "comprimento":
+        // converte tudo para metros como base
+        const fatorComp = {
+          mm: 0.001,
+          cm: 0.01,
+          m: 1,
+          km: 1000,
+          in: 0.0254,
+          mi: 1609.34,
+        };
+        base = valor * fatorComp[de];
+        return base / fatorComp[para];
+
+      case "temperatura":
+        let celsius;
+
+        // converte para Celsius primeiro
+        if (de === "C") celsius = valor;
+        else if (de === "F") celsius = (valor - 32) * (5 / 9);
+        else if (de === "K") celsius = valor - 273.15;
+
+        // converte de Celsius para destino
+        if (para === "C") return celsius;
+        if (para === "F") return celsius * (9 / 5) + 32;
+        if (para === "K") return celsius + 273.15;
+        break;
+
+      default:
+        return NaN;
+    }
+  }
+
+  // ===== evento de clique no botão converter =====
+  btnConverter.addEventListener("click", () => {
+    const tipo = tipoEl.value;
+    const de = deEl.value;
+    const para = paraEl.value;
+    const valor = parseFloat(valorEl.value);
+
+    const resultado = converter(tipo, valor, de, para);
+
+    console.log(resultado );
+
+    resultadoEl.value = resultado.toFixed(4);
+  });
 });
