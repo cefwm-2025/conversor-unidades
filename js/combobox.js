@@ -32,6 +32,35 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnConverter = document.getElementById("btnConverter");
   const resultadoEl = document.getElementById("resultado");
 
+  // ==== Função de notificação (Bootstrap Toast) ====
+  function showToast(message, type = "warning") {
+  const toastEl = document.getElementById("toast");
+  const toastMsg = document.getElementById("toastMessage");
+
+  // garante que começa “hidden” e com a classe de cor correta
+  toastEl.className = `toast hide align-items-center text-bg-${type} border-0`;
+  toastMsg.textContent = message;
+
+  const toast = new bootstrap.Toast(toastEl); // usa delay/autohide do HTML
+  toast.show();
+}
+
+
+  // ==== Habilitar/desabilitar botão Converter ====
+  function validarCampos() {
+    const temValor = valorEl.value.trim() !== "";
+    const temTipo = !!tipoEl.value;
+    const temDe = !!deEl.value;
+    const temPara = !!paraEl.value;
+    btnConverter.disabled = !(temValor && temTipo && temDe && temPara);
+  }
+
+  [valorEl, tipoEl, deEl, paraEl].forEach((el) => {
+    el.addEventListener("input", validarCampos);
+    el.addEventListener("change", validarCampos);
+  });
+  validarCampos();
+
   const optionHTML = (v) => `<option value="${v}">${LABELS[v] || v}</option>`;
 
   function preencherSelects() {
@@ -104,16 +133,43 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ===== evento de clique no botão converter =====
-  btnConverter.addEventListener("click", () => {
+    btnConverter.addEventListener("click", () => {
     const tipo = tipoEl.value;
     const de = deEl.value;
     const para = paraEl.value;
-    const valor = parseFloat(valorEl.value);
+    const raw = valorEl.value.trim();
+
+    if (!raw) {
+      showToast("Informe um valor para converter!", "warning");
+      return;
+    }
+
+    const valor = parseFloat(raw.replace(",", "."));
+    if (isNaN(valor)) {
+      showToast("Digite um número válido (ex: 10,5 ou 10.5).", "danger");
+      return;
+    }
+
+    if (de === para) {
+      showToast("Escolha unidades diferentes para converter.", "info");
+      return;
+    }
 
     const resultado = converter(tipo, valor, de, para);
-
-    console.log(resultado );
-
     resultadoEl.value = resultado.toFixed(4);
+    showToast("Conversão realizada com sucesso!", "success");
   });
+
+
+    const btnLimpar = document.getElementById("btnLimpar");
+  if (btnLimpar) {
+    btnLimpar.addEventListener("click", () => {
+      valorEl.value = "";
+      resultadoEl.value = "";
+      btnConverter.disabled = true;
+      valorEl.focus();
+      showToast("Campos limpos.", "secondary");
+    });
+  }
+
 });
