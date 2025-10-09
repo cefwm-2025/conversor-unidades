@@ -44,6 +44,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if(lista.length > 1 && deEl.value === paraEl.value) {
       paraEl.selectedIndex = 1;
     }
+
+    // Limpa campo "Resultado" ao alterar o valor do campo "Tipo"
+     resultadoEl.value = "";
   }
 
   tipoEl.addEventListener("change", preencherSelects);
